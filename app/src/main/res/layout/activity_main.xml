@@ -1,41 +1,78 @@
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <EditText
-        android:id="@+id/time_remaining"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:hint="@string/default_period"
-        android:cursorVisible="false"
-        android:textAlignment="center"
-        android:textSize="120sp"/>
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        <EditText
+                android:id="@+id/period_time_remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center"
+                android:inputType="number"
+                android:hint="@string/default_period"
+                android:textSize="140sp"/>
+        <TextView
+                android:id="@+id/period_length_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/period_time_remaining"
+                android:layout_centerHorizontal="true"
+                android:text="@string/period_length"/>
+
+        <TextView
+                android:id="@+id/number_of_periods_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/period_time_remaining"
+                android:layout_centerHorizontal="true"
+                android:text="@string/number_periods"/>
+
+        <EditText
+                android:id="@+id/periods_remaining"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/number_of_periods_label"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:inputType="number"
+                android:hint="@string/default_number_periods"/>
+
+    </RelativeLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom|center_horizontal">
+        android:orientation="horizontal">
         <Button
             android:id="@+id/start_button"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Start"/>
+            android:text="@string/start" />
         <Button
-            android:id="@+id/stop_button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Stop"/>
+                android:id="@+id/pause_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/pause"
+                android:visibility="gone" />
+        <Button
+                android:id="@+id/resume_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/resume"
+                android:visibility="gone" />
     </LinearLayout>
 
-</FrameLayout>
+</LinearLayout>

@@ -1,7 +1,14 @@
 <resources>
     <string name="app_name">PechaKucha</string>
 
-    <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
-    <string name="default_period">20</string>
+    <string name="start">Start</string>
+    <string name="restart">Restart</string>
+
+    <string name="period_length">Period Length</string>
+    <string name="number_periods">Number of periods</string>
+
+    <string name="default_period" translatable="false">20</string>
+    <string name="default_number_periods" translatable="false">20</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
 </resources>
