@@ -105,8 +105,10 @@ public class MainActivity extends AppCompatActivity {
     private void setupRunningTimerInterface() {
         periodsDisplay.setEnabled(false);
         periodsDisplay.removeTextChangedListener(textWatcher);
+        periodsDisplay.setTextColor(Color.WHITE);
         periodTimeDisplay.setEnabled(false);
         periodTimeDisplay.removeTextChangedListener(textWatcher);
+        periodTimeDisplay.setTextColor(Color.WHITE);
 
         startButton.setVisibility(View.GONE);
         resumeButton.setVisibility(View.GONE);
