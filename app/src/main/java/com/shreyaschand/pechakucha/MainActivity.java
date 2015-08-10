@@ -14,6 +14,8 @@ import android.widget.EditText;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import icepick.Icepick;
+import icepick.State;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,17 +26,25 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.pause_button)  Button pauseButton;
     @Bind(R.id.resume_button) Button resumeButton;
 
-    private int totalPeriods;
-    private int periodLength;
+    @State int totalPeriods;
+    @State int periodLength;
     private int timeLeftOnPause;
     private PechaKuchaTimer countDownTimer;
     private TextWatcher textWatcher;
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Icepick.saveInstanceState(this, outState);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        Icepick.restoreInstanceState(this, savedInstanceState);
+
         textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -78,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
 
     @OnClick(R.id.resume_button)
     public void onResumeButtonClick() {
-        countDownTimer = new PechaKuchaTimer(timeLeftOnPause + 1); // add a buffer second 
+        countDownTimer = new PechaKuchaTimer(timeLeftOnPause + 1); // add a buffer second
         countDownTimer.start();
         setupRunningTimerInterface();
     }
@@ -127,13 +137,18 @@ public class MainActivity extends AppCompatActivity {
     private class PechaKuchaTimer extends CountDownTimer {
 
         int secondsLeft;
+        boolean timerRunning;
 
         public PechaKuchaTimer(int seconds) {
             super(seconds * 1000, 1000);
+            timerRunning = true; // it'll be running very soon so just set to true
+            secondsLeft = seconds * 1000;
         }
 
         public PechaKuchaTimer(int periodLength, int numPeriods) {
             super(periodLength * numPeriods * 1000, 1000);
+            timerRunning = true; // it'll be running very soon so just set to true
+            secondsLeft = periodLength * numPeriods * 1000;
         }
 
         @Override
