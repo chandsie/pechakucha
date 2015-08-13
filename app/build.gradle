@@ -23,6 +23,7 @@ android {
 
         buildConfigField "String", "GIT_SHA", "\"${gitSha}\""
         buildConfigField "String", "BUILD_TIME", "\"${buildTime}\""
+        buildConfigField "String", "AUTHOR_NAME", "\"Shreyas Chand\""
     }
 
     buildTypes {

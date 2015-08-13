@@ -3,6 +3,7 @@ package com.shreyaschand.pechakucha;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -106,6 +107,18 @@ public class MainActivity extends AppCompatActivity {
         countDownTimer = new PechaKuchaTimer(timeLeftOnPause + 1); // add a buffer second
         countDownTimer.start();
         setupRunningTimerInterface();
+    }
+
+    @OnClick(R.id.info_button)
+    public void onInfoButtonClick() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
+        dialog.setTitle(R.string.info_dialog_title)
+              .setIcon(R.drawable.info)
+              .setMessage(getString(R.string.app_name) + "\n" +
+                          getString(R.string.version_label) + " " + BuildConfig.VERSION_NAME + "\n" +
+                          getString(R.string.created_by) + " " + BuildConfig.AUTHOR_NAME + " (" + getString(R.string.website) + ")")
+              .setPositiveButton(getString(R.string.done), null)
+              .create().show();
     }
 
     private void setupInitialInterface() {
