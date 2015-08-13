@@ -28,13 +28,20 @@ public class MainActivity extends AppCompatActivity {
 
     @State int totalPeriods;
     @State int periodLength;
-    private int timeLeftOnPause;
+    @State int timeLeftOnPause;
+    @State int timerRunning = -1; // Used to pass time left on to new activity instance after rotation
     private PechaKuchaTimer countDownTimer;
     private TextWatcher textWatcher;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        if (countDownTimer != null && countDownTimer.isTimerRunning()) {
+            countDownTimer.cancel();
+            timerRunning = countDownTimer.getSecondsLeft();
+        } else {
+            timerRunning = -1;
+        }
         Icepick.saveInstanceState(this, outState);
     }
 
@@ -54,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 setupInitialInterface();
+                periodsDisplay.removeTextChangedListener(this);
+                periodTimeDisplay.removeTextChangedListener(this);
             }
 
             @Override
@@ -61,6 +70,12 @@ public class MainActivity extends AppCompatActivity {
                 // no-op
             }
         };
+
+        if (timerRunning > -1) {
+            countDownTimer = new PechaKuchaTimer(timerRunning);
+            countDownTimer.start();
+            setupRunningTimerInterface();
+        }
     }
 
     @OnClick(R.id.start_button)
@@ -138,8 +153,8 @@ public class MainActivity extends AppCompatActivity {
 
     private class PechaKuchaTimer extends CountDownTimer {
 
-        int secondsLeft;
-        boolean timerRunning;
+        private int secondsLeft;
+        private boolean timerRunning;
 
         public PechaKuchaTimer(int seconds) {
             super(seconds * 1000, 1000);
@@ -162,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onFinish() {
+            timerRunning = false;
             periodTimeDisplay.setText("0");
             periodTimeDisplay.setTextColor(Color.RED);
 
@@ -173,6 +189,10 @@ public class MainActivity extends AppCompatActivity {
 
         public int getSecondsLeft() {
             return secondsLeft;
+        }
+
+        public boolean isTimerRunning() {
+            return timerRunning;
         }
     }
 }
