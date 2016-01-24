@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -141,6 +142,8 @@ public class MainActivity extends AppCompatActivity {
         startButton.setVisibility(View.GONE);
         resumeButton.setVisibility(View.GONE);
         pauseButton.setVisibility(View.VISIBLE);
+
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     private void setupStoppedTimerInterface() {
@@ -152,6 +155,8 @@ public class MainActivity extends AppCompatActivity {
         startButton.setText(R.string.restart);
         startButton.setVisibility(View.VISIBLE);
         pauseButton.setVisibility(View.GONE);
+
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
 
