@@ -13,20 +13,21 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
-import butterknife.Bind;
+import com.evernote.android.state.State;
+import com.evernote.android.state.StateSaver;
+
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import icepick.Icepick;
-import icepick.State;
 
 public class MainActivity extends AppCompatActivity {
 
-    @Bind(R.id.period_time_remaining) EditText periodTimeDisplay;
-    @Bind(R.id.periods_remaining)     EditText periodsDisplay;
+    @BindView(R.id.period_time_remaining) EditText periodTimeDisplay;
+    @BindView(R.id.periods_remaining) EditText periodsDisplay;
 
-    @Bind(R.id.start_button)  Button startButton;
-    @Bind(R.id.pause_button)  Button pauseButton;
-    @Bind(R.id.resume_button) Button resumeButton;
+    @BindView(R.id.start_button) Button startButton;
+    @BindView(R.id.pause_button) Button pauseButton;
+    @BindView(R.id.resume_button) Button resumeButton;
 
     @State int totalPeriods;
     @State int periodLength;
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             timerRunning = -1;
         }
-        Icepick.saveInstanceState(this, outState);
+        StateSaver.saveInstanceState(this, outState);
     }
 
     @Override
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Icepick.restoreInstanceState(this, savedInstanceState);
+        StateSaver.restoreInstanceState(this, savedInstanceState);
 
         textWatcher = new TextWatcher() {
             @Override
