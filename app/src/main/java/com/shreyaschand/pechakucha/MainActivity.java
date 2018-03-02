@@ -34,7 +34,25 @@ public class MainActivity extends AppCompatActivity {
     @State int timeLeftOnPause;
     @State int timerRunning = -1; // Used to pass time left on to new activity instance after rotation
     private PechaKuchaTimer countDownTimer;
-    private TextWatcher textWatcher;
+
+    private final TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            // no-op
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            setupInitialInterface();
+            periodsDisplay.removeTextChangedListener(this);
+            periodTimeDisplay.removeTextChangedListener(this);
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            // no-op
+        }
+    };
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -54,25 +72,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         StateSaver.restoreInstanceState(this, savedInstanceState);
-
-        textWatcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // no-op
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                setupInitialInterface();
-                periodsDisplay.removeTextChangedListener(this);
-                periodTimeDisplay.removeTextChangedListener(this);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                // no-op
-            }
-        };
 
         if (timerRunning > -1) {
             countDownTimer = new PechaKuchaTimer(timerRunning);
