@@ -175,13 +175,13 @@ public class MainActivity extends AppCompatActivity {
         private int secondsLeft;
         private boolean timerRunning;
 
-        public PechaKuchaTimer(int seconds) {
+        PechaKuchaTimer(int seconds) {
             super(seconds * 1000, 1000);
             timerRunning = true; // it'll be running very soon so just set to true
             secondsLeft = seconds * 1000;
         }
 
-        public PechaKuchaTimer(int periodLength, int numPeriods) {
+        PechaKuchaTimer(int periodLength, int numPeriods) {
             super(periodLength * numPeriods * 1000, 1000);
             timerRunning = true; // it'll be running very soon so just set to true
             secondsLeft = periodLength * numPeriods * 1000;
@@ -190,8 +190,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onTick(long millisUntilFinished) {
             secondsLeft = (int) (millisUntilFinished / 1000);
-            periodTimeDisplay.setText(Integer.toString(secondsLeft % periodLength));
-            periodsDisplay.setText(Integer.toString((secondsLeft / periodLength) + 1));
+            periodTimeDisplay.setText(String.valueOf(secondsLeft % periodLength));
+            periodsDisplay.setText(String.valueOf((secondsLeft / periodLength) + 1));
         }
 
         @Override
@@ -206,11 +206,11 @@ public class MainActivity extends AppCompatActivity {
             setupStoppedTimerInterface();
         }
 
-        public int getSecondsLeft() {
+        int getSecondsLeft() {
             return secondsLeft;
         }
 
-        public boolean isTimerRunning() {
+        boolean isTimerRunning() {
             return timerRunning;
         }
     }
